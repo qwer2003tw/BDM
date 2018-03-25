@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="25e4502f-c0bf-451f-99b4-5942409a1e9c" name="NTUT1" url="http://140.124.181.55">
+        <fileTransfer host="140.124.181.55" port="3003" rootFolder="/home/hadoop/Downloads" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="3003" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
