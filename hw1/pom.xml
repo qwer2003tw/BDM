@@ -6,7 +6,24 @@
 
     <groupId>ntut.bdm</groupId>
     <artifactId>hw1</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>2.0</version>
+    <build>
+        <pluginManagement>
+        <!-- NOTE: These plugins will be removed from future versions of the super POM -->
+        <!-- They are kept for the moment as they are very unlikely to conflict with lifecycle mappings (MNG-4453) -->
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.7.0</version>
+                    <configuration>
+                        <source>1.8</source>
+                        <target>1.8</target>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
