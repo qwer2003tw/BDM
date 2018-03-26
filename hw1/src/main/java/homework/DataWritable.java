@@ -72,26 +72,4 @@ public class DataWritable implements Writable /*WritableComparable<DataWritable>
         return this.value.hashCode();
     }
 
-
-/*
-    @Override
-    public int compareTo(DataWritable o) {
-        return this.value.id.compareTo(o.value.id);
-    }
-
-    static {
-        WritableComparator.define(DataWritable.class, new DataWritable.Comparator());
-    }
-
-    public static class Comparator extends WritableComparator {
-        public Comparator() {
-            super(DataWritable.class);
-        }
-
-        public int compare(byte[] b1, int s1, int l1, byte[] b2, int s2, int l2) {
-            int thisValue = readInt(b1, s1);
-            int thatValue = readInt(b2, s2);
-            return thisValue < thatValue ? -1 : (thisValue == thatValue ? 0 : 1);
-        }
-    }*/
 }

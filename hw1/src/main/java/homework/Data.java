@@ -15,7 +15,7 @@ public class Data implements Serializable {
     public final float sub_metering_3;
     public final boolean isInvalid;
     public final String id;
-    private final static String DELIMS = ";";
+    private final static String DELIMITER = ";";
     private String _string = null;
 
     Data(
@@ -40,7 +40,7 @@ public class Data implements Serializable {
     }
 
     public Data(String data) {
-        String[] dataArr = data.split(Pattern.quote(DELIMS));
+        String[] dataArr = data.split(Pattern.quote(DELIMITER));
         String date;
         String time;
         float global_active_power;
@@ -96,25 +96,25 @@ public class Data implements Serializable {
         if (_string != null) return _string;
         StringBuilder sb = new StringBuilder();
         sb.append(date);
-        sb.append(DELIMS);
+        sb.append(DELIMITER);
         sb.append(time);
-        sb.append(DELIMS);
+        sb.append(DELIMITER);
 
         if (isInvalid) {
             sb.append("?;?;?;?;?;?;");
         } else {
             sb.append(String.format("%.3f", global_active_power));
-            sb.append(DELIMS);
+            sb.append(DELIMITER);
             sb.append(String.format("%.3f", global_reactive_power));
-            sb.append(DELIMS);
+            sb.append(DELIMITER);
             sb.append(String.format("%.3f", voltage));
-            sb.append(DELIMS);
+            sb.append(DELIMITER);
             sb.append(String.format("%.3f", global_intensity));
-            sb.append(DELIMS);
+            sb.append(DELIMITER);
             sb.append(String.format("%.3f", sub_metering_1));
-            sb.append(DELIMS);
+            sb.append(DELIMITER);
             sb.append(String.format("%.3f", sub_metering_2));
-            sb.append(DELIMS);
+            sb.append(DELIMITER);
             sb.append(String.format("%.3f", sub_metering_3));
         }
 

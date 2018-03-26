@@ -1,9 +1,7 @@
 package homework;
 
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
@@ -14,7 +12,6 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.stream.DoubleStream;
 
 
@@ -183,42 +180,6 @@ public class Driver {
         }
     }
 
-    /*
-        public static class DataCombiner
-                extends Reducer<Text, IntWritable, Text, IntWritable> {
-            private IntWritable result = new IntWritable();
-
-            public void reduce(Text key, Iterable<IntWritable> values,
-                               Context context
-            ) throws IOException, InterruptedException {
-                int sum = 0;
-                for (IntWritable val : values) {
-                    sum += val.get();
-                }
-                result.set(sum);
-                context.write(key, result);
-            }
-        }
-
-        public static class FloatSumCombiner
-                extends Reducer<Text, FloatWritable, Text, FloatWithLengthWritable> {
-            private FloatWithLengthWritable result = new FloatWithLengthWritable();
-
-            public void reduce(Text key, Iterable<FloatWritable> values,
-                               Context context
-            ) throws IOException, InterruptedException {
-                float sum = 0;
-                int count = 0;
-                for (FloatWritable val : values) {
-                    sum += val.get();
-                    count++;
-                }
-                result.setValue(sum);
-                result.setLength(count);
-                context.write(key, result);
-            }
-        }
-    */
     public static void main(String[] args) throws Exception {
         Configuration conf = new Configuration();
         conf.addResource("core-site.xml");
