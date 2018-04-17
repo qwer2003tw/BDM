@@ -26,7 +26,7 @@ public class Driver {
         public void map(Object key, Text value, Context context
         ) throws IOException, InterruptedException {
             final String line = value.toString();
-            if (line.startsWith("Date;Time;")) return;
+            if (line.startsWith("\"IDLink\",\"Title\"")) return;
             DataWritable data = new DataWritable(line);
             if (data.get().isInvalid) return;
 
@@ -185,7 +185,7 @@ public class Driver {
         conf.addResource("core-site.xml");
         conf.addResource("mapred-site.xml");
         conf.addResource("yarn-site.xml");
-        Job job = Job.getInstance(conf, "Homework1");
+        Job job = Job.getInstance(conf, "Homework2");
         job.setJarByClass(Driver.class);
 
         job.setMapperClass(TokenizerMapper.class);

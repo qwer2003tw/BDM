@@ -40,6 +40,7 @@ public class Data implements Serializable {
     }
 
     public Data(String data) {
+        int asdf;
         String[] dataArr = data.split(Pattern.quote(DELIMITER));
         String date;
         String time;
@@ -57,7 +58,6 @@ public class Data implements Serializable {
                 int idx = 0;
                 date = dataArr[idx++];
                 time = dataArr[idx++];
-
                 global_active_power = Float.valueOf(dataArr[idx++]);
                 global_reactive_power = Float.valueOf(dataArr[idx++]);
                 voltage = Float.valueOf(dataArr[idx++]);
