@@ -3,7 +3,6 @@ package homework;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.FloatWritable;
-import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
@@ -12,11 +11,8 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.log4j.Logger;
 
-
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.DoubleStream;
+
 
 
 public class Driver {
@@ -38,11 +34,11 @@ public class Driver {
             FloatWritable sentimentHeadline = new FloatWritable(data.get().sentimentHeadline);
             FloatWritable sentimentTitle = new FloatWritable(data.get().sentimentTitle);
             FloatWritable sentimentTotal = new FloatWritable(sentimentHeadline.get() + sentimentTitle.get());
-            id = new Text(data.get().topic);
+            id = new Text(data.get().topic + "Title+Headline");
             context.write(id, sentimentTotal);
-            id = new Text("sentimentHeadline-" + data.get().topic);
+            id = new Text(data.get().topic + "sentimentHeadline-");
             context.write(id, sentimentHeadline);
-            id = new Text("sentimentTitle-" + data.get().topic);
+            id = new Text(data.get().topic + "sentimentTitle-");
             context.write(id, sentimentTitle);
         }
     }
@@ -50,18 +46,20 @@ public class Driver {
 
     public static class DataReducer extends Reducer<Text, FloatWritable, Text, FloatWritable> {
 
-        private FloatWritable result = new FloatWritable();
 
         public void reduce(Text key, Iterable<FloatWritable> values,
                            Context context
         ) throws IOException, InterruptedException {
             float reduceSum = 0f;
+            int count = 0;
+            Text sumstr = new Text(key + "_Sum:");
+            Text avgstr = new Text(key + "_Average:");
             for (FloatWritable val : values) {
                 reduceSum += val.get();
+                count++;
             }
-            result.set(reduceSum);
-            context.write(key, result);
-
+            context.write(sumstr, new FloatWritable(reduceSum));
+            context.write(avgstr, new FloatWritable(reduceSum / count));
         }
     }
 
