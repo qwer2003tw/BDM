@@ -1,4 +1,6 @@
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FSDataInputStream;
+import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.FloatWritable;
 import org.apache.hadoop.io.Text;
@@ -8,11 +10,41 @@ import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.log4j.Logger;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.parser.Parser;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
 
 public class Driver {
     final static Logger logger = Logger.getLogger(Driver.class);
+
+    public static void DataHandle(Configuration conf) throws Exception {
+
+        String filePath = "hdfs://master:9000/user/hadoop/input/reut2-000.sgm";
+
+        Path path = new Path(filePath);
+        FileSystem fs = path.getFileSystem(conf);
+        FSDataInputStream inputStream = fs.open(path);
+        byte[] bs = new byte[inputStream.available()];
+        inputStream.read(bs);
+
+        String content = null;
+        content = new String(bs);
+
+        System.out.println(inputStream.available());
+        inputStream.close();
+        fs.close();
+        Document doc = Jsoup.parse(content, "ISO-8859-1", Parser.xmlParser());
+        Elements bodys = doc.getElementsByTag("body");
+        for (Element body : bodys) {
+            String asdf = body.text();
+            System.out.println(asdf);
+        }
+
+    }
 
     public static class TokenizerMapper
             extends Mapper<Object, Text, Text, FloatWritable> {
@@ -65,7 +97,7 @@ public class Driver {
         FileInputFormat.addInputPath(job, new Path(args[0]));
         FileOutputFormat.setOutputPath(job, new Path(args[1]));
         CheckAndDelete.checkAndDelete(args[1], conf);
-
+        DataHandle(conf);
         System.exit(job.waitForCompletion(true) ? 0 : 1);
     }
 }
