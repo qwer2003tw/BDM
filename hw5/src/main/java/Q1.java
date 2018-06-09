@@ -5,7 +5,6 @@ import scala.Tuple2;
 
 import java.io.FileOutputStream;
 import java.util.List;
-import java.util.function.Function;
 import java.util.regex.Pattern;
 
 public final class Q1 {
@@ -25,7 +24,7 @@ public final class Q1 {
 
         JavaRDD<String> lines = spark.read().textFile(args[0]).javaRDD();
 
-        JavaRDD<String> words = lines.filter( s -> !s.contains(" ")).map(s -> TAB.split(s)[0]);
+        JavaRDD<String> words = lines.filter(s -> !s.contains(" ")).map(s -> TAB.split(s)[0]);
 
         JavaPairRDD<String, Integer> ones = words.mapToPair(s -> new Tuple2<>(s, 1));
 

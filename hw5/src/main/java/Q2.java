@@ -24,7 +24,7 @@ public final class Q2 {
 
         JavaRDD<String> lines = spark.read().textFile(args[0]).javaRDD();
 
-        JavaRDD<String> words = lines.filter( s -> !s.contains(" ")).map(s -> TAB.split(s)[1]);
+        JavaRDD<String> words = lines.filter(s -> !s.contains(" ")).map(s -> TAB.split(s)[1]);
 
         JavaPairRDD<String, Integer> ones = words.mapToPair(s -> new Tuple2<>(s, 1));
 
